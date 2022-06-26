@@ -1,0 +1,21 @@
+{
+  "meta":{
+    "code":200
+  },
+  "response":{
+    "title":"Ricotta cheese",
+    "calories":174,
+    "carbs":3.04,
+    "protein":11.26,
+    "fat":12.98,
+    "saturatedfat":8.295,
+    "unsaturatedfat":4.012,
+    "fiber":0,
+    "cholesterol":0.051,
+    "sugar":0.27,
+    "sodium":0.084,
+    "potassium":0.105,
+    "gramsperserving":20,
+    "pcstext":"Whole cheese"
+  }
+}

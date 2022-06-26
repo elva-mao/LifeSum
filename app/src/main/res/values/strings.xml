@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LifeSum</string>
+    <string name="nutrition_carbs">CARBS</string>
+    <string name="nutrition_fat">FAT</string>
+    <string name="nutrition_protein">PROTEIN</string>
+
+    <string name="network_err_tips"></string>
+    <string name="shake_guide_tips">Shake your phone to get more food items ~ </string>
+
+</resources>

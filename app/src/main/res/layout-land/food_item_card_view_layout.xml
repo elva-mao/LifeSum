@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="foodItem"
+            type="com.elva.lifesum.model.FoodItem" />
+        <variable
+            name="isLoading"
+            type="java.lang.Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.elva.lifesum.ui.view.FoodItemCardView
+            android:id="@+id/foodCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/food_item_card_side_margin"
+            android:layout_marginEnd="@dimen/food_item_card_side_margin"
+            android:layout_marginBottom="@dimen/food_item_card_bottom_margin"
+            app:cardElevation="@dimen/food_item_card_elevation"
+            app:cardPreventCornerOverlap="false"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.FoodItem.Card"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="NotSibling">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/foodCaloryView"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/calories_view_oval_bg"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/foodTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{foodItem.title}"
+                        android:textAppearance="@style/TextAppearance.FoodItem.FoodTitle"
+                        android:textColor="@color/food_item_nutrition_calories_text_color"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/foodCalory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{Integer.toString(foodItem.calories)}"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Headline2"
+                        android:textStyle="bold"
+                        android:textColor="@color/food_item_nutrition_calories_text_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/foodCaloryPerServing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Calories per serving"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Caption"
+                        android:textColor="@color/food_item_nutrition_calories_text_color"
+                        android:textStyle="italic"
+                        android:gravity="center" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/nutritionLayout"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/foodCaloryView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="50dp"
+                    android:background="@color/cardview_light_background">
+
+                    <TextView
+                        android:id="@+id/carbsContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:includeFontPadding="false"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Headline5"
+                        android:textColor="@color/food_item_nutrition_content_text_color"
+                        app:layout_constraintEnd_toStartOf="@+id/proteinContent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@{Float.toString(foodItem.carbs)}" />
+
+                    <TextView
+                        android:id="@+id/proteinContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Headline5"
+                        android:textColor="@color/food_item_nutrition_content_text_color"
+                        app:layout_constraintEnd_toStartOf="@+id/fatContent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/carbsContent"
+                        app:layout_constraintTop_toTopOf="@+id/carbsContent"
+                        android:text="@{Float.toString(foodItem.protein)}" />
+
+                    <TextView
+                        android:id="@+id/fatContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Headline5"
+                        android:textColor="@color/food_item_nutrition_content_text_color"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/proteinContent"
+                        app:layout_constraintTop_toTopOf="@+id/proteinContent"
+                        android:text="@{Float.toString(foodItem.fat)}" />
+
+                    <TextView
+                        android:id="@+id/carbsHeadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="24dp"
+                        android:text="@string/nutrition_carbs"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Caption"
+                        android:textColor="@color/food_item_nutrition_headline_text_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/carbsContent"
+                        app:layout_constraintStart_toStartOf="@+id/carbsContent"
+                        app:layout_constraintTop_toBottomOf="@+id/carbsContent" />
+
+
+                    <TextView
+                        android:id="@+id/proteinHeadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nutrition_protein"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Caption"
+                        android:textColor="@color/food_item_nutrition_headline_text_color"
+                        app:layout_constraintBottom_toBottomOf="@+id/carbsHeadline"
+                        app:layout_constraintEnd_toEndOf="@+id/proteinContent"
+                        app:layout_constraintStart_toStartOf="@+id/proteinContent"
+                        app:layout_constraintTop_toTopOf="@+id/carbsHeadline" />
+
+                    <TextView
+                        android:id="@+id/fatHeadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nutrition_fat"
+                        android:textAppearance="@style/TextAppearance.FoodItem.Caption"
+                        android:textColor="@color/food_item_nutrition_headline_text_color"
+                        app:layout_constraintBottom_toBottomOf="@+id/proteinHeadline"
+                        app:layout_constraintEnd_toEndOf="@+id/fatContent"
+                        app:layout_constraintStart_toStartOf="@+id/fatContent"
+                        app:layout_constraintTop_toTopOf="@+id/proteinHeadline" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.elva.lifesum.ui.view.FoodItemCardView>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:indeterminate="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
