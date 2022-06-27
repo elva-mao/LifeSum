@@ -24,8 +24,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
 
     private val mViewModel: FoodViewModel by viewModels()
-    private lateinit var mDataBinding : ActivityMainBinding
-    private var shakeDetector : ShakeDetector ?= null
+    private lateinit var mDataBinding: ActivityMainBinding
+    private var shakeDetector: ShakeDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,24 +34,24 @@ class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
         observeFoodItem()
     }
 
-    private fun initViews(){
+    private fun initViews() {
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(mDataBinding.root)
         mDataBinding.foodItemCard.root.hide()
     }
 
     private fun initSensor() {
-       val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         shakeDetector = ShakeDetector(sensorManager, this)
     }
 
     override fun onFrequencyControl() {
-        showToast("Please wait a moment to shake again ！")
+        showToast(  "Please wait a moment to shake again ！")
     }
 
     override fun onShake() {
-        mViewModel.getFoodItem(FoodDataUtils.generateFoodItemId())
-        showToast("Aha ! Food item is coming...")
+        loadFoodItem()
+        showSnackbar(mDataBinding.root, "Aha ! Food item is loading...")
     }
 
     override fun onStart() {
@@ -74,6 +74,17 @@ class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
         shakeDetector = null
     }
 
+    private fun loadFoodItem() {
+        NetworkUtils.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
+            if (!isConnected) {
+                showToast( "Oops ! Network is not available now")
+                return@observe
+            } else {
+                mViewModel.getFoodItem(FoodDataUtils.generateFoodItemId())
+            }
+        }
+    }
+
     /**
      * observe the request foodItem data and update ui
      */
@@ -91,7 +102,7 @@ class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
                             }
                         }
                         is State.Error -> {
-                            showToast(state.message)
+                            showSnackbar(mDataBinding.root, state.message)
                             showLoading(false)
                         }
                     }
@@ -100,14 +111,14 @@ class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
         }
     }
 
-    private fun showFoodCardView(foodItem : FoodItem) {
+    private fun showFoodCardView(foodItem: FoodItem) {
         mDataBinding.foodItemCard.foodItem = foodItem
         mDataBinding.foodItemCard.root.show()
     }
 
     private fun showLoading(isLoading: Boolean) {
         mDataBinding.foodItemCard.isLoading = isLoading
-        if(isLoading) mDataBinding.foodItemCard.foodCardView.hide() else mDataBinding.foodItemCard.foodCardView.show()
+        if (isLoading) mDataBinding.foodItemCard.foodCardView.hide() else mDataBinding.foodItemCard.foodCardView.show()
     }
 
     /**
@@ -116,7 +127,7 @@ class MainActivity : AppCompatActivity(), ShakeDetector.OnShakeListener {
     private fun handleNetworkChanges() {
         NetworkUtils.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
             if (!isConnected) {
-                showToast("Oops ! Network is not available now")
+                showToast( "Oops ! Network is not available now")
             }
         }
     }
