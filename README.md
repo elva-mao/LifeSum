@@ -25,7 +25,7 @@ LifeSum demo is based on the MVVM architecture and the Repository pattern.
 ## Open API
 LifeSum demo using the [LifeSumAPI](https://api.lifesum.com) for constructing RESTful API.<br>
 
-## todo
-- polish ui
-- data persistence
-- more pages
+## TODO
+- Polish ui and user interaction
+- Data persistence
+- Food item detail page
